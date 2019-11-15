@@ -31,4 +31,9 @@ insert into alumnos(nomAl, apeAl, mail) values('Ana', 'Gil Perez', 'correo2@mail
 insert into alumnos(nomAl, apeAl, mail) values('Lucas', 'Arango Perez', 'correo3@mail');
 insert into alumnos(nomAl, apeAl, mail) values('Ines', 'Fernandez Sanz', 'correo5@mail');
 
+-- Algunos Modulos
+insert into modulos(nomMod, horasSem) values("DWESE", 8);
+insert into modulos(nomMod, horasSem) values("HLC", 3);
+insert into modulos(nomMod, horasSem) values("DWEC", 6);
+
 
