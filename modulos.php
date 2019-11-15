@@ -47,7 +47,13 @@ $misModulos=$modulo->read();
                         echo "<th scope='row'>{$mod->idMod}</th>";
                         echo "<td>{$mod->nomMod}</td>";
                         echo "<td>{$mod->horasSem}</td>";
-                        echo "<td>#</td>";
+                        echo "<td>";
+                        echo "<form name='borrar' action='bmodulo.php' method='POST' style='display:inline'>";
+                        echo "<input type='hidden' name='id' value='{$mod->idMod}'>";
+                        echo "<a href='mmodulo.php?id={$mod->idMod}' class='btn btn-info'>Editar</a>";
+                        echo "&nbsp;<input type='submit' value='Borrar' class='btn btn-danger'>";
+                        echo "</td>";
+                        echo "</form>";
                         echo "</tr>";
                     }
                     $llave=null;

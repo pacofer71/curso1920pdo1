@@ -50,7 +50,15 @@ class Modulos{
     }
     //Delete----------------------
     public function delete(){
-
+        $borrar="delete from modulos where idMod=:i";
+        $stmt=$this->conector->prepare($borrar);
+        try{
+            $stmt->execute([
+                ':i'=>$this->idMod
+            ]);
+        }catch(PDOException $ex){
+            die("Error al borrar módulo: ".$ex);
+        }
     }
     //-----------------getters y setter
     public function setIdMod($id){
