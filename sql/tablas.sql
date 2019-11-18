@@ -36,4 +36,19 @@ insert into modulos(nomMod, horasSem) values("DWESE", 8);
 insert into modulos(nomMod, horasSem) values("HLC", 3);
 insert into modulos(nomMod, horasSem) values("DWEC", 6);
 
+--Alguna matriculas
+insert into matriculas values(1,1, 0);
+insert into matriculas values(1,2, 0);
+insert into matriculas values(1,3, 0);
+insert into matriculas values(2,1, 0);
+insert into matriculas values(2,2, 0);
+insert into matriculas values(2,3, 0);
+insert into matriculas values(3,1, 0);
+insert into matriculas values(3,2, 0);
+insert into matriculas values(3,3, 0);
+insert into matriculas values(4,1, 0);
+insert into matriculas values(4,2, 0);
+
+
+
 
