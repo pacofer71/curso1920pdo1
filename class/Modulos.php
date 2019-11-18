@@ -46,6 +46,18 @@ class Modulos{
     }
     //Update--------------------------
     public function update(){
+        $update="update modulos set nomMod=:n, horasSem=:h where idMod=:i";
+        $stmt=$this->conector->prepare($update);
+        try{
+                $stmt->execute([
+                    ':n'=>$this->nomMod, 
+                    ':h'=>$this->horasSem,
+                    'i'=>$this->idMod
+                ]);
+        }catch(PDOException $ex){
+            die("Error al actualizar el módulo, ".$ex);
+            
+        }
 
     }
     //Delete----------------------
@@ -59,6 +71,21 @@ class Modulos{
         }catch(PDOException $ex){
             die("Error al borrar módulo: ".$ex);
         }
+    }
+    //-----------------------------------------------------
+    public function getModulo($id){
+        $consulta="select * from modulos where idMod=:i";
+        $stmt=$this->conector->prepare($consulta);
+        try{
+            $stmt->execute([
+                ':i'=>$id
+            ]);
+        }catch(PDOException $ex){
+            die("Error al recuperar el módulo, ". $ex);
+        }
+        //devolvemos todos los datos del módulo en cuestion
+        $modulo=$stmt->fetch(PDO::FETCH_OBJ);
+        return $modulo;
     }
     //-----------------getters y setter
     public function setIdMod($id){
