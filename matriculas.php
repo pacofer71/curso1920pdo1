@@ -53,7 +53,7 @@ $filas=$matricula->read();
                         echo "<form name='borrar' action='bmatricula.php' method='POST' style='display:inline'>";
                         echo "<input type='hidden' name='al' value='{$fila->al}'>";
                         echo "<input type='hidden' name='mod' value='{$fila->modulo}'>";
-                        echo "<a href='mmatricula.php?id=#' class='btn btn-info'>Editar</a>";
+                        echo "<a href='mmatricula.php?al={$fila->al}&mod={$fila->modulo}' class='btn btn-info'>Editar</a>";
                         echo "&nbsp;<input type='submit' value='Borrar' class='btn btn-danger'>";
                         echo "</td>";
                         echo "</form>";

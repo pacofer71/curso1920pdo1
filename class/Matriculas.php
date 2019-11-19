@@ -11,7 +11,7 @@
             
             if($n==1){
                 $this->conector=func_get_arg(0);
-            }session_start();
+            }
             //hacemos el autoload de las clases
             spl_autoload_register(function ($nombre) {
                 require "./class/" . $nombre . ".php";
@@ -20,10 +20,20 @@
             $llave=$conexion->getConector();
             
             }    
-        }
+        
         ///////////////CRUD
         public function create(){
-
+            $c="insert into matriculas values(:a, :m, :n)";
+            $stmt=$this->conector->prepare($c);
+            try{
+                $stmt->execute([
+                    ':a'=>$this->al,
+                    ':m'=>$this->modulo,
+                    ':n'=>$this->notaFinal
+                ]);
+            }catch(Exception $ex){
+                die("Error al matricular Alumno!!". $ex);
+            }
         }
         public function read(){
             $cons="select al, modulo, nomAl, apeAl, nomMod, notaFinal from alumnos, modulos, matriculas where idAl=al AND modulo=idMod order by apeAl, nomMod";
@@ -38,6 +48,17 @@
             return $todos;
         }
         public function update(){
+            $u="update matriculas set notaFinal=:n where al=:a AND modulo=:m";
+            $stmt=$this->conector->prepare($u);
+            try{
+                $stmt->execute([
+                    ':a'=>$this->al,
+                    ':m'=>$this->modulo,
+                    ':n'=>$this->notaFinal
+                ]);
+            }catch(Exception $ex){
+                die("Error al matricular Alumno!!". $ex);
+            }
 
         }
         public function delete(){
@@ -53,6 +74,41 @@
             }
         }        
         //----------------------getters setters y otros metodos
+        public function existeMatricula($a, $m){
+                $consulta="select * from matriculas where al=:a AND modulo=:m";
+                $stmt=$this->conector->prepare($consulta);
+                try{
+                    $stmt->execute([
+                        ':a'=>$a,
+                        ':m'=>$m
+                    ]);
+                }catch(PDOException $ex){
+                    die("Error al comprobar mat ". $ex);
+                }
+                $cont=0;
+                while($fila=$stmt->fetch()){
+                    $cont++;
+                }
+                return ($cont!=0);
+        }
+
+        //----------------------
+        public function getMatricula($a, $m){
+            $cons="select al, modulo, nomAl, apeAl, nomMod, notaFinal from alumnos, modulos, matriculas where idAl=al AND modulo=idMod AND al=:a AND modulo=:m";
+            $stmt=$this->conector->prepare($cons);
+            try{
+                $stmt->execute([
+                    ':a'=>$a,
+                    ':m'=>$m
+                ]);
+            }catch(PDOException $ex){
+                die("Error al devolver Matricula ". $ex);
+            }
+            $fila=$stmt->fetch(PDO::FETCH_OBJ);
+            return $fila;
+
+        }
+        //-------------------------------------------
         public function setAl($a){
             $this->al=$a;
         }
