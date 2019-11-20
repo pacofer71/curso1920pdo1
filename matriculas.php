@@ -9,7 +9,21 @@ $conexion=new Conexion();
 $llave=$conexion->getConector();
 
 $matricula=new Matriculas($llave);
-$filas=$matricula->read();
+$totalRegistros=$matricula->getTotal();
+$paginacion=3;   //cuantos registros quiero ver
+if($totalRegistros%$paginacion==0){
+    $totalPaginas=intdiv($totalRegistros, $paginacion);
+}
+else{
+    $totalPaginas=intdiv($totalRegistros, $paginacion)+1;
+}
+if(!isset($_GET['pag'])){
+    $inicio=0;
+}
+else{
+    $inicio=$paginacion*($_GET['pag']-1);
+}
+$filas=$matricula->read($inicio,$paginacion);
 
 ?>
 <html lang="es">
@@ -63,6 +77,21 @@ $filas=$matricula->read();
                 ?>
             </tbody>
         </table>
+        <div class='container mt-4'>
+            <b>Página:&nbsp;</b>
+            <?php
+                for($i=1; $i<=$totalPaginas; $i++){
+                    if($i!=$totalPaginas){
+                        echo "<a href='matriculas.php?pag=$i' style='text-decoration:none'>&nbsp;&nbsp;$i&nbsp;&nbsp;|";
+                    }
+                    else{
+                        echo "<a href='matriculas.php?pag=$i' style='text-decoration:none'>&nbsp;&nbsp;$i&nbsp;&nbsp;";
+
+                    }
+                }
+            ?>
+        </div>
+
     </div>
 </body>
 

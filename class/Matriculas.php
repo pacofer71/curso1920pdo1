@@ -35,8 +35,8 @@
                 die("Error al matricular Alumno!!". $ex);
             }
         }
-        public function read(){
-            $cons="select al, modulo, nomAl, apeAl, nomMod, notaFinal from alumnos, modulos, matriculas where idAl=al AND modulo=idMod order by apeAl, nomMod";
+        public function read($p, $c){
+            $cons="select al, modulo, nomAl, apeAl, nomMod, notaFinal from alumnos, modulos, matriculas where idAl=al AND modulo=idMod order by apeAl, nomMod limit $p, $c";
             $stmt=$this->conector->prepare($cons);
             try{
                 $stmt->execute();
@@ -117,6 +117,21 @@
         }
         public function setNotaFinal($n){
             $this->notaFinal=$n;
+        }
+        //----------Total de registros para paginacion;
+        public function getTotal(){
+            $c="select * from matriculas";
+            $stmt=$this->conector->prepare($c);
+            try{
+                $stmt->execute();
+            }catch(PDOException $ex){
+                die("Error al contar registros!! ". $ex);
+            }
+            $cont=0;
+            while($fila=$stmt->fetch()){
+                $cont++;
+            }
+            return $cont;
         }
 
 }
